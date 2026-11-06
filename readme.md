@@ -1,5 +1,5 @@
 # Subdiva 🟢🔵🟣
-> A modern, zero-dependency remaster of the iconic viral subdivision game *Koalas to the Max*.
+> A modern remaster of the iconic viral subdivision game *Koalas to the Max*.
 
 Remember stumbling upon *Koalas to the Max* through sides like *wwwdotcom.com* or *The Useless Web* out of boredom back in the 2010s? 
 
