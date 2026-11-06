@@ -3,11 +3,13 @@ const MIN_SIZE = 4; // Circles stop dividing at 4px
 const MAX_NODES = Math.pow(SIZE / MIN_SIZE, 2); // 16,384 nodes
 
 let activeNodes = 0;
+let inputReady = false;
 let winTriggered = false;
 let imageData = null;
 let svg = d3.select("#canvas")
     .attr("viewBox", `0 0 ${SIZE} ${SIZE}`)
     .attr("preserveAspectRatio", "xMidYMid meet");
+
 
 // UI Elements
 const dropZone = document.getElementById("drop-zone");
@@ -63,9 +65,15 @@ function processImage(src) {
         ctx.drawImage(img, x, y, size, size, 0, 0, SIZE, SIZE);
         imageData = ctx.getImageData(0, 0, SIZE, SIZE).data;
 
+        startGame();
         dropZone.classList.add("hidden-fade");
         gameTitle.classList.add("hidden");
-        startGame();
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                inputReady = true;
+            });
+        });;
     };
     img.src = src;
 }
@@ -87,6 +95,7 @@ function getAverageColor(x, y, w, h) {
 }
 
 function startGame() {
+    inputReady = false;
     svg.selectAll("*").remove();
     activeNodes = 0;
     winTriggered = false;
@@ -110,7 +119,7 @@ function createCircle(x, y, size, parentX, parentY, parentSize) {
         .attr("cy", startCy)
         .attr("r", startR)
         .attr("fill", color)
-        .on("mouseover", function() { split(this, x, y, size); })
+        .on("mousemove", function() { split(this, x, y, size); })
         .on("touchstart", function(e) { 
             e.preventDefault(); 
             split(this, x, y, size); 
@@ -124,6 +133,7 @@ function createCircle(x, y, size, parentX, parentY, parentSize) {
 }
 
 function split(node, x, y, size) {
+    if (!inputReady || size <= MIN_SIZE) return;
     if (size <= MIN_SIZE) return;
 
     if (d3.select(node).classed("splitting")) return;
@@ -151,7 +161,7 @@ document.addEventListener("touchmove", (e) => {
     const touch = e.touches[0];
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
     if (element && element.tagName === 'circle') {
-        element.dispatchEvent(new MouseEvent('mouseover', {
+        element.dispatchEvent(new MouseEvent('mousemove', {
             bubbles: true,
             cancelable: true,
             view: window
