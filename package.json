@@ -1,0 +1,23 @@
+{
+  "name": "subdiva",
+  "version": "1.0.0",
+  "description": "> A modern, zero-dependency remaster of the iconic viral subdivision game *Koalas to the Max*.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kyrlas/Subdiva.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Kyrlas/Subdiva/issues"
+  },
+  "homepage": "https://github.com/Kyrlas/Subdiva#readme",
+  "devDependencies": {
+    "d3": "7.9.0",
+    "tailwindcss": "3.4.17"
+  }
+}
