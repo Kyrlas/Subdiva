@@ -1,0 +1,18 @@
+/* Hopefully prvents reload swipping on mobile (not tested yet) */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* 
+  Custom hidden class for smooth fading. */
+.hidden-fade {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden;
+}
+
+/* Custom dragover classes triggered by Javascript */
+#drop-zone.dragover #drop-content {
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    background-color: rgba(59, 130, 246, 0.1);
+}
