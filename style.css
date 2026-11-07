@@ -3,14 +3,22 @@ body {
     overscroll-behavior-y: contain;
 }
 
+#game-layout {
+    position: relative;
+    width: min(80vmin, 800px, calc(100vw - 2rem), calc(100vh - 5rem));
+    max-width: 800px;
+}
+
+#game-container {
+    width: min(80vmin, 800px, calc(100vw - 2rem), calc(100vh - 5rem));
+    height: min(80vmin, 800px, calc(100vw - 2rem), calc(100vh - 5rem));
+}
+
 #progress-container {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    left: 1rem;
-    z-index: 70;
-    max-width: 42rem;
-    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.75rem);
+    left: 0;
     color: #fff;
     filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
 }

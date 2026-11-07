@@ -6,6 +6,8 @@ let activeNodes = 0;
 let inputReady = false;
 let winTriggered = false;
 let imageData = null;
+let timerStart = 0;
+let timerInterval = null;
 let svg = d3.select("#canvas")
     .attr("viewBox", `0 0 ${SIZE} ${SIZE}`)
     .attr("preserveAspectRatio", "xMidYMid meet");
@@ -20,7 +22,28 @@ const gameTitle = document.getElementById("game-title");
 const progressContainer = document.getElementById("progress-container");
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text");
+const gameTimer = document.getElementById("game-timer");
 const progressRegion = progressBar.parentElement;
+
+function updateTimer() {
+    const elapsedSeconds = Math.floor((Date.now() - timerStart) / 1000);
+    const minutes = Math.floor(elapsedSeconds / 60).toString().padStart(2, "0");
+    const seconds = (elapsedSeconds % 60).toString().padStart(2, "0");
+    gameTimer.textContent = `${minutes}:${seconds}`;
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timerStart = Date.now();
+    gameTimer.textContent = "00:00";
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    if (timerStart) updateTimer();
+}
 
 function updateProgress() {
     const progress = winTriggered
@@ -53,6 +76,8 @@ resetBtn.addEventListener("click", () => {
     svg.selectAll("*").remove();
     activeNodes = 0;
     winTriggered = false;
+    stopTimer();
+    gameTimer.textContent = "00:00";
     progressContainer.classList.add("hidden-fade");
     updateProgress();
     fileInput.value = ""; 
@@ -87,6 +112,7 @@ function processImage(src) {
 
         setTimeout(() => {
             inputReady = true;
+            startTimer();
         }, 2000);
     };
     img.src = src;
@@ -169,6 +195,7 @@ function split(node, x, y, size) {
 function checkWin() {
     if (!winTriggered && activeNodes >= MAX_NODES - 50) {
         winTriggered = true;
+        stopTimer();
         updateProgress();
         setTimeout(() => modal.classList.remove("hidden-fade"), 400);
     }
