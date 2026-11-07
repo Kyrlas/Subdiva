@@ -5,7 +5,7 @@ body {
 
 #progress-container {
     position: fixed;
-    top: 1rem;
+    top: max(1rem, calc(50% - min(40vmin, 400px) - 4.5rem));
     right: 1rem;
     left: 1rem;
     z-index: 70;
