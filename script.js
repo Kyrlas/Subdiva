@@ -69,11 +69,9 @@ function processImage(src) {
         dropZone.classList.add("hidden-fade");
         gameTitle.classList.add("hidden");
 
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                inputReady = true;
-            });
-        });;
+        setTimeout(() => {
+            inputReady = true;
+        }, 2000);
     };
     img.src = src;
 }
