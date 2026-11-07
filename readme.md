@@ -13,6 +13,14 @@ This is my first Frontend and using Tailwind CSS, so excuse the somewhat rough d
 
 ---
 
+## Play it here
+
+```
+https://kyrlas.github.io/Subdiva/
+```
+
+---
+
 ## ✨ Features
 
 - **Zero Backend / 100% Client-Side:** Everything runs locally inside your browser No server dependencies, no API keys, and no broken proxy servers.
