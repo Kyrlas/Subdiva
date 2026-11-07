@@ -12,16 +12,6 @@
 </head>
 <body class="bg-pink-900 text-white flex justify-center items-center min-h-screen overflow-hidden select-none">
 
-    <div id="progress-container" class="hidden-fade" aria-label="Game progress">
-        <div id="progress-label" class="text-sm font-semibold">
-            <span>Progress</span>
-            <span id="progress-text">0%</span>
-        </div>
-        <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Image revealed">
-            <div id="progress-bar"></div>
-        </div>
-    </div>
-
     <div id="game-title" class="absolute top-20 inset-x-0 z-[60] mb-4 px-4 text-center text-lg font-semibold leading-relaxed text-white drop-shadow-lg sm:text-xl md:text-2xl">
         <p>Play the game by dragging and dropping an image or clicking to select a file.</p>
         <p>Click on the image to reveal more!</p>
@@ -39,6 +29,15 @@
 
     <!-- Main Game Area -->
     <div id="game-container" class="w-[80vmin] h-[80vmin] max-w-[800px] max-h-[800px] relative bg-gray-800 shadow-2xl overflow-hidden">
+        <div id="progress-container" class="hidden-fade" aria-label="Game progress">
+            <div id="progress-label" class="text-sm font-semibold">
+                <span>Progress</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Image revealed">
+                <div id="progress-bar"></div>
+            </div>
+        </div>
         <svg id="canvas" class="w-full h-full block"></svg>
     </div>
 
