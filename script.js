@@ -17,6 +17,20 @@ const fileInput = document.getElementById("file-input");
 const modal = document.getElementById("congrats-modal");
 const resetBtn = document.getElementById("reset-btn");
 const gameTitle = document.getElementById("game-title");
+const progressContainer = document.getElementById("progress-container");
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text");
+const progressRegion = progressBar.parentElement;
+
+function updateProgress() {
+    const progress = winTriggered
+        ? 100
+        : Math.min(100, Math.round(((activeNodes - 1) / (MAX_NODES - 1)) * 100));
+
+    progressBar.style.width = `${progress}%`;
+    progressText.textContent = `${progress}%`;
+    progressRegion.setAttribute("aria-valuenow", progress);
+}
 
 // File Upload Event Listeners
 fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
@@ -39,6 +53,8 @@ resetBtn.addEventListener("click", () => {
     svg.selectAll("*").remove();
     activeNodes = 0;
     winTriggered = false;
+    progressContainer.classList.add("hidden-fade");
+    updateProgress();
     fileInput.value = ""; 
 });
 // Function to handle the uploaded file
@@ -69,11 +85,9 @@ function processImage(src) {
         dropZone.classList.add("hidden-fade");
         gameTitle.classList.add("hidden");
 
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                inputReady = true;
-            });
-        });;
+        setTimeout(() => {
+            inputReady = true;
+        }, 2000);
     };
     img.src = src;
 }
@@ -100,6 +114,8 @@ function startGame() {
     activeNodes = 0;
     winTriggered = false;
     createCircle(0, 0, SIZE);
+    updateProgress();
+    progressContainer.classList.remove("hidden-fade");
 }
 // Makes nice circles 
 function createCircle(x, y, size, parentX, parentY, parentSize) {
@@ -147,11 +163,13 @@ function split(node, x, y, size) {
     createCircle(x + half, y + half, half, x, y, size);
 
     checkWin();
+    updateProgress();
 }
 // Checks if the player has won the game, Max_nodes is 16,384, added -50 as a margin, can be adjust to custom value, for testing i set it to 16000 for super quick wins
 function checkWin() {
     if (!winTriggered && activeNodes >= MAX_NODES - 50) {
         winTriggered = true;
+        updateProgress();
         setTimeout(() => modal.classList.remove("hidden-fade"), 400);
     }
 }
