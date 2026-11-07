@@ -6,7 +6,7 @@
     <title>Koalas to the Max - Tailwind Rebuild</title>
     <!-- Tailwind-->
     <link rel="stylesheet" href="./tailwind.css">
-    <link rel="stylesheet" href="./style.css?v=3">
+    <link rel="stylesheet" href="./style.css?v=5">
     <!-- D3.js Library -->
     <script src="./vendor/d3.min.js"></script>
 </head>
@@ -17,13 +17,21 @@
         <p>Click on the image to reveal more!</p>
     </div>
 
-    <div id="progress-container" class="hidden-fade" aria-label="Game progress">
-        <div id="progress-label" class="text-sm font-semibold">
-            <span>Progress</span>
-            <span id="progress-text">0%</span>
+    <div id="game-layout">
+        <div id="progress-container" class="hidden-fade" aria-label="Game progress">
+            <div id="progress-label" class="text-sm font-semibold">
+                <span>Progress</span>
+                <span>Time: <span id="game-timer">00:00</span></span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Image revealed">
+                <div id="progress-bar"></div>
+            </div>
         </div>
-        <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Image revealed">
-            <div id="progress-bar"></div>
+
+        <!-- Main Game Area -->
+        <div id="game-container" class="w-[80vmin] h-[80vmin] max-w-[800px] max-h-[800px] relative bg-gray-800 shadow-2xl overflow-hidden">
+            <svg id="canvas" class="w-full h-full block"></svg>
         </div>
     </div>
 
@@ -35,11 +43,6 @@
             <p class="text-white-400 text-lg">or click to select a file</p>
         </div>
         <input type="file" id="file-input" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-    </div>
-
-    <!-- Main Game Area -->
-    <div id="game-container" class="w-[80vmin] h-[80vmin] max-w-[800px] max-h-[800px] relative bg-gray-800 shadow-2xl overflow-hidden">
-        <svg id="canvas" class="w-full h-full block"></svg>
     </div>
 
     <!-- Win Pop up -->
