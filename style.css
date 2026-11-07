@@ -4,11 +4,13 @@ body {
 }
 
 #progress-container {
-    position: absolute;
+    position: fixed;
     top: 1rem;
     right: 1rem;
     left: 1rem;
-    z-index: 1;
+    z-index: 70;
+    max-width: 42rem;
+    margin: 0 auto;
     color: #fff;
     filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
 }
