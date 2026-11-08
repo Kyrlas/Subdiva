@@ -45,6 +45,23 @@ body {
     transition: width 200ms ease;
 }
 
+#congrats-modal-content {
+    position: relative;
+}
+
+#close-modal-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    color: #9ca3af;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+#close-modal-btn:hover {
+    color: #fff;
+}
+
 /* 
   Custom hidden class for smooth fading. */
 .hidden-fade {
