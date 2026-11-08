@@ -1,10 +1,12 @@
 const SIZE = 512;
 const MIN_SIZE = 4; // Circles stop dividing at 4px
 const MAX_NODES = Math.pow(SIZE / MIN_SIZE, 2); // 16,384 nodes
+const EASY_WIN_MARGIN = 50;
 
 let activeNodes = 0;
 let inputReady = false;
 let winTriggered = false;
+let difficulty = "easy";
 let imageData = null;
 let timerStart = 0;
 let timerInterval = null;
@@ -18,7 +20,13 @@ const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
 const modal = document.getElementById("congrats-modal");
 const resetBtn = document.getElementById("reset-btn");
+const restartBtn = document.getElementById("restart-btn");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const completionTime = document.getElementById("completion-time");
 const gameTitle = document.getElementById("game-title");
+const dropContent = document.getElementById("drop-content");
+const easyModeBtn = document.getElementById("easy-mode-btn");
+const hardModeBtn = document.getElementById("hard-mode-btn");
 const progressContainer = document.getElementById("progress-container");
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text");
@@ -48,7 +56,7 @@ function stopTimer() {
 function updateProgress() {
     const progress = winTriggered
         ? 100
-        : Math.min(100, Math.round(((activeNodes - 1) / (MAX_NODES - 1)) * 100));
+        : Math.min(99, Math.round(((activeNodes - 1) / (MAX_NODES - 1)) * 100));
 
     progressBar.style.width = `${progress}%`;
     progressText.textContent = `${progress}%`;
@@ -57,6 +65,12 @@ function updateProgress() {
 
 // File Upload Event Listeners
 fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+dropContent.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
+    fileInput.click();
+});
+easyModeBtn.addEventListener("click", () => selectDifficulty("easy"));
+hardModeBtn.addEventListener("click", () => selectDifficulty("hard"));
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
     dropZone.classList.add("dragover");
@@ -68,8 +82,22 @@ dropZone.addEventListener("drop", (e) => {
     if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
 });
 
-// Resets the game and ui 
-resetBtn.addEventListener("click", () => {
+function selectDifficulty(mode) {
+    difficulty = mode;
+    const easySelected = mode === "easy";
+    easyModeBtn.classList.toggle("bg-blue-600", easySelected);
+    easyModeBtn.classList.toggle("hover:bg-blue-500", easySelected);
+    easyModeBtn.classList.toggle("bg-gray-600", !easySelected);
+    easyModeBtn.classList.toggle("hover:bg-gray-500", !easySelected);
+    hardModeBtn.classList.toggle("bg-blue-600", !easySelected);
+    hardModeBtn.classList.toggle("hover:bg-blue-500", !easySelected);
+    hardModeBtn.classList.toggle("bg-gray-600", easySelected);
+    hardModeBtn.classList.toggle("hover:bg-gray-500", easySelected);
+    easyModeBtn.setAttribute("aria-pressed", easySelected);
+    hardModeBtn.setAttribute("aria-pressed", !easySelected);
+}
+
+function resetGame() {
     modal.classList.add("hidden-fade");
     dropZone.classList.remove("hidden-fade");
     gameTitle.classList.remove("hidden");
@@ -78,10 +106,19 @@ resetBtn.addEventListener("click", () => {
     winTriggered = false;
     stopTimer();
     gameTimer.textContent = "00:00";
+    completionTime.textContent = "Your time: 00:00";
     progressContainer.classList.add("hidden-fade");
+    restartBtn.classList.add("hidden");
     updateProgress();
-    fileInput.value = ""; 
+    fileInput.value = "";
+}
+
+closeModalBtn.addEventListener("click", () => {
+    modal.classList.add("hidden-fade");
 });
+
+resetBtn.addEventListener("click", resetGame);
+restartBtn.addEventListener("click", resetGame);
 // Function to handle the uploaded file
 function handleFile(file) {
     if (!file || !file.type.startsWith("image/")) return;
@@ -191,11 +228,16 @@ function split(node, x, y, size) {
     checkWin();
     updateProgress();
 }
-// Checks if the player has won the game, Max_nodes is 16,384, added -50 as a margin, can be adjust to custom value, for testing i set it to 16000 for super quick wins
 function checkWin() {
-    if (!winTriggered && activeNodes >= MAX_NODES - 50) {
+    const winThreshold = difficulty === "easy"
+        ? MAX_NODES - EASY_WIN_MARGIN
+        : MAX_NODES;
+
+    if (!winTriggered && activeNodes >= winThreshold) {
         winTriggered = true;
         stopTimer();
+        completionTime.textContent = `Your time: ${gameTimer.textContent}`;
+        restartBtn.classList.remove("hidden");
         updateProgress();
         setTimeout(() => modal.classList.remove("hidden-fade"), 400);
     }
