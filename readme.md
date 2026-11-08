@@ -1,4 +1,8 @@
 # Subdiva 🟢🔵🟣
+
+> [!WARNING]  
+> Don't use the Main Branch right now; it's several commits behind Discord activity. Use Discord activity for the latest features. It's also the branch used for the GitHub page
+
 > A modern remaster of the iconic viral subdivision game *Koalas to the Max*.
 
 Remember stumbling upon *Koalas to the Max* through sides like *wwwdotcom.com* or *The Useless Web* out of boredom back in the 2010s? 
