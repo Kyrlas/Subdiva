@@ -26,8 +26,10 @@ https://kyrlas.github.io/Subdiva/
 Therefore can be run by anyone
 -  **Smart Square Cropping:** Drop in any high-resolution image of any ratio or size. It automatically center-crops and optimizes the image to a $512 \times 512$ color matrix.
 - **May Support Mobile?** Pointer and swipe simulation theorettilcy included, but not tested yet (will change this once i did)
-- 🏆 **Completion Detection & Reset:** Detects when you have subdivided the cricles down to the smallest $4\text{px}$ dots (Total 16,384 dots, with a margin of -50 dots, can be adjusted to your liking in script.js function checkWin() )
-- 🎯 **Modern UI:** Built using **D3.js (v7)** and styled with **Tailwind CSS**.
+- **Completion Detection & Reset:** Detects when you have subdivided the cricles down to the smallest $4\text{px}$ dots
+- **Modern UI:** Built using **D3.js (v7)** and styled with **Tailwind CSS**.
+- **Difficulty:** Added two difficulty options: easy and hard. Easy gives you a leeway of about 99% to win the game, while hard mode you'll need 100% to win the game
+- **Progress Bar and Timer** Added a progress bar and a timer so you can compare time to your friends, and the progress bar shows how close to finishing you are 
 
 ---
 
